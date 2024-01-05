@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list_rxdart/Business%20logic/Task.dart';
 import 'package:to_do_list_rxdart/UI/Screen/model_tasks_screen.dart';
 
-class TaskListScreen extends StatelessWidget {
+class TaskScreen extends StatelessWidget {
   final ModelTasks model = ModelTasks();
 
   @override
@@ -13,11 +13,11 @@ class TaskListScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<List<Task>>(
-        stream: model.tasksStream,
+        stream: model.tasksStream,  //Подписка на стрим
         builder: (context, snapshot) {
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-              child: Text('Нет задач.'),
+              child: Text('Нет задач'),
             );
           }
 
@@ -29,7 +29,7 @@ class TaskListScreen extends StatelessWidget {
                 title: Text(task.title),
                 subtitle: Text(task.description),
                 onTap: () {
-                  model.NavigateToTaskDetailScreen(context,task);
+                  model.NavigateToTaskDetailScreen(context,task,model);
                 },
               );
             },
@@ -38,7 +38,7 @@ class TaskListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          model.NavigateToTaskDetailScreen(context,null);
+          model.NavigateToTaskDetailScreen(context,null,model);
         },
         child: Icon(Icons.add),
       ),
